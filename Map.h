@@ -104,6 +104,12 @@ void drawMap() {
 	std::cout << "\n";
 }
 
+void resetMap() {
+	createMap();
+	player.x = map.width / 2, player.y = map.height / 2;
+	map.tiles[player.y][player.x] = 'v';
+}
+
 bool canMove(char tile) {
 	if (tile == NULL) return true;
 	if (tile == '$') return true;

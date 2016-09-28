@@ -19,11 +19,8 @@ void init() {
 	cursorInfo.dwSize = 1;
 	cursorInfo.bVisible = false;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
-	createMap();
-	player.x = map.width / 2, player.y = map.height / 2;
 	map.light = false;
-	map.tiles[player.y][player.x] = 'v';
-	drawMap();
+	resetMap();
 }
 
 bool toggleKey(short VK) {
@@ -41,11 +38,7 @@ void checkKeyPresses() {
 	if (GetAsyncKeyState(VK_RIGHT)) move(RIGHT);
 	if (toggleKey(VK_ESCAPE)) quit = true;
 	if (toggleKey('L')) map.light = !map.light;
-	if (toggleKey('R')) {
-		createMap();
-		player.x = map.width / 2, player.y = map.height / 2;
-		map.tiles[player.y][player.x] = 'v';
-	}
+	if (toggleKey('R')) resetMap();
 }
 
 int main() {
