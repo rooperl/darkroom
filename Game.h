@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <ctime>
 #include <windows.h>
 #include <chrono>
@@ -11,6 +12,7 @@
 class Game {
 public:
 	bool quit;
+	bool text;
 } game;
 
 void wait(int milliseconds) {

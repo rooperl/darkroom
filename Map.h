@@ -32,16 +32,16 @@ public:
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
-void fillTextBuffer(int lines) {
-	for (int line = 0; line < lines; line++) {
-		for (int space = 0; space < MAX_WIDTH; space++)
-			std::cout << " ";
-		std::cout << "\n";
-	}
+void setCursor(short y = 0, short x = 0) {
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { x, y });
 }
 
-void clearScreen() {
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
+std::string fillTextBuffer() {
+	setCursor(MAX_HEIGHT);
+	std::string text;
+	for (int space = 0; space < MAX_WIDTH; space++)
+		text += " ";
+	return text;
 }
 
 void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, int direction = HORIZONTAL) {
@@ -116,7 +116,7 @@ bool tileVisible(int x, int y) {
 
 void drawMap() {
 	int x, y;
-	clearScreen();
+	setCursor();
 	for (y = player.y - (MAX_HEIGHT / 2); y < player.y + (MAX_HEIGHT / 2); y++) {
 		for (x = player.x - (MAX_WIDTH / 2); x < player.x + (MAX_WIDTH / 2); x++) {
 			if (x < 0 || y < 0 || x >= MAP_WIDTH || y >= MAP_HEIGHT ) std::cout << BLANK_TILE;
