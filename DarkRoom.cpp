@@ -2,8 +2,6 @@
 #include <chrono>
 #include <thread>
 
-bool quit = false;
-
 void wait(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
 }
@@ -19,26 +17,11 @@ void init() {
 	cursorInfo.dwSize = 1;
 	cursorInfo.bVisible = false;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
-	map.light = false;
 	resetMap();
-}
-
-bool toggleKey(short VK) {
-	return GetAsyncKeyState(VK) & 0x8000 != 0;
 }
 
 bool windowFocused() {
 	return GetConsoleWindow() == GetForegroundWindow();
-}
-
-void checkKeyPresses() {
-	if (GetAsyncKeyState(VK_UP)) move(UP);
-	if (GetAsyncKeyState(VK_DOWN)) move(DOWN);
-	if (GetAsyncKeyState(VK_LEFT)) move(LEFT);
-	if (GetAsyncKeyState(VK_RIGHT)) move(RIGHT);
-	if (toggleKey(VK_ESCAPE)) quit = true;
-	if (toggleKey('L')) map.light = !map.light;
-	if (toggleKey('R')) resetMap();
 }
 
 int main() {
@@ -54,6 +37,6 @@ int main() {
 		std::cout << "\n\nCoins: " << player.coins << "\n\n";
 		wait(50);
 		if (windowFocused()) checkKeyPresses();
-		if (quit) return 0;
+		if (game.quit) return 0;
 	}
 }

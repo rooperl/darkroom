@@ -8,7 +8,7 @@ public:
 	int width = MAP_WIDTH;
 	int height = MAP_HEIGHT;
 	char tiles[MAP_HEIGHT][MAP_WIDTH];
-	bool light;
+	bool light = false;
 } map;
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
