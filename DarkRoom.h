@@ -21,7 +21,7 @@ public:
 } player;
 
 void wait(int milliseconds) {
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
 void fillTextBuffer(int spaces) {
