@@ -1,7 +1,12 @@
 #pragma once
 
-#define MAP_WIDTH 40
-#define MAP_HEIGHT 20
+#define MAP_WIDTH 50
+#define MAP_HEIGHT 30
+#define MAX_WIDTH 41
+#define MAX_HEIGHT 21
+#define H 0
+#define X 0
+#define Y 1
 
 class Map {
 public:
@@ -13,10 +18,6 @@ public:
 } map;
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
-
-#define H 0
-#define X 0
-#define Y 1
 
 void clearScreen() {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
@@ -92,12 +93,23 @@ bool tileVisible(int x, int y) {
 	return false;
 }
 
+int mapCoordinate(int xy) {
+	if (xy = X)
+		if (MAP_WIDTH <= MAX_WIDTH) return 0;
+		else return (player.x - (MAX_WIDTH / 2));
+	else
+		if (MAP_HEIGHT <= MAX_HEIGHT) return 0;
+		else return (player.y - (MAX_HEIGHT / 2));
+	return 0;
+}
+
 void drawMap() {
 	int x, y;
 	clearScreen();
-	for (y = 0; y < map.height; y++) {
-		for (x = 0; x < map.width; x++) {
-			if (tileVisible(x, y)) std::cout << map.tiles[y][x];
+	for (y = mapCoordinate(Y); y < mapCoordinate(Y) + (MAP_HEIGHT > MAX_HEIGHT ? MAX_HEIGHT : MAP_HEIGHT); y++) {
+		for (x = mapCoordinate(X); x < mapCoordinate(Y) + (MAP_WIDTH > MAX_WIDTH ? MAX_WIDTH : MAP_WIDTH); x++) {
+			if (x < 0 || y < 0 || x >= MAX_WIDTH || y >= MAX_HEIGHT ) std::cout << ' ';
+			else if (tileVisible(x, y)) std::cout << map.tiles[y][x];
 			else std::cout << ' ';
 		}
 		std::cout << "\n";
