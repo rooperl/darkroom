@@ -10,7 +10,7 @@
 
 class Game {
 public:
-	bool quit = false;
+	bool quit;
 } game;
 
 class Player {
