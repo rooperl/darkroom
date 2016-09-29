@@ -6,13 +6,19 @@
 #include <chrono>
 #include <thread>
 
-#include "Player.h"
 #include "Map.h"
 
 class Game {
 public:
 	bool quit = false;
 } game;
+
+class Player {
+public:
+	int x;
+	int y;
+	int coins;
+} player;
 
 void wait(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
