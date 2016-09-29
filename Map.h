@@ -44,8 +44,8 @@ void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, int directio
 	}
 }
 
-void drawCoins(int coins) {
-	for (int coin = 0; coin <= coins; coin++) {
+void drawCoins(int coinNumber) {
+	for (int coin = 0; coin <= coinNumber; coin++) {
 		int x = rand() % map.width + 1;
 		int y = rand() % map.height + 1;
 		map.tiles[y][x] = '$';
@@ -62,13 +62,13 @@ void createMap() {
 	int verticalWalls = rand() % (map.width / 2) + 2;
 	int horizontalCorridors = rand() % (map.height / 2) + 2;
 	int verticalCorridors = rand() % (map.width / 2) + 2;
-	int coins = rand() % (map.width * map.height) / 100 + 1;
+	int coinNumber = rand() % (map.width * map.height) / 100 + 1;
 
 	drawLines(horizontalWalls, 1, '#', H);
 	drawLines(verticalWalls, 1, '#');
 	drawLines(horizontalCorridors, 3, H);
 	drawLines(verticalCorridors, 3);
-	drawCoins(coins);
+	drawCoins(coinNumber);
 
 	for (x = 0; x < map.width; x++)
 		map.tiles[0][x] = '#';
