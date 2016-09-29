@@ -6,7 +6,6 @@
 #include <chrono>
 #include <thread>
 
-#include "Player.h"
 #include "Map.h"
 
 class Game {
@@ -16,11 +15,6 @@ public:
 
 void wait(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-}
-
-void fillTextBuffer(int spaces) {
-	for (int space = 0; space <= spaces; space++)
-		std::cout << " ";
 }
 
 void init() {

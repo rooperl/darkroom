@@ -1,10 +1,15 @@
 #pragma once
 
-#define MAP_WIDTH 50
-#define MAP_HEIGHT 30
+#include "Game.h"
+
+#define BLANK_TILE '.'
+#define MAP_WIDTH 61
+#define MAP_HEIGHT 37
 #define MAX_WIDTH 41
 #define MAX_HEIGHT 21
-#define H 0
+#define MAP_VISION 8
+#define HORIZONTAL 0
+#define VERTICAL 1
 #define X 0
 #define Y 1
 
@@ -15,18 +20,34 @@ public:
 	char tiles[MAP_HEIGHT][MAP_WIDTH];
 	bool light;
 	int vision;
+	
 } map;
 
+class Player {
+public:
+	int x;
+	int y;
+	int coins;
+} player;
+
 enum Direction { UP, DOWN, LEFT, RIGHT };
+
+void fillTextBuffer(int lines) {
+	for (int line = 0; line < lines; line++) {
+		for (int space = 0; space < MAX_WIDTH; space++)
+			std::cout << " ";
+		std::cout << "\n";
+	}
+}
 
 void clearScreen() {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 });
 }
 
-void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, int direction = -1) {
+void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, int direction = HORIZONTAL) {
 	int wallLength, wallX, wallY, lineNumber, tileNumber;
 	for (int line = 0; line <= lines; line++) {
-		direction == H ? wallLength = rand() % (map.width / 2) + 1 :
+		direction == HORIZONTAL ? wallLength = rand() % (map.width / 2) + 1 :
 			wallLength = rand() % (map.height / 2) + 1;
 		wallX = rand() % (map.width) + 1;
 		wallY = rand() % (map.height) + 1;
@@ -34,12 +55,12 @@ void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, int directio
 		for (lineNumber = 0; lineNumber < maxLineWidth; lineNumber++) {
 			if (rand() % 2 == 0)
 				for (tileNumber = 0; tileNumber <= wallLength; tileNumber++)
-					direction == H ? map.tiles[wallY + lineNumber][wallX + tileNumber] = tileSymbol :
+					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][wallX + tileNumber] = tileSymbol :
 					map.tiles[wallY + tileNumber][wallX + lineNumber] = tileSymbol;
 			else
 				for (tileNumber = wallLength; tileNumber > 0; tileNumber--)
 
-					direction == H ? map.tiles[wallY + lineNumber][map.width - tileNumber] = tileSymbol :
+					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][map.width - tileNumber] = tileSymbol :
 					map.tiles[wallY + map.height - tileNumber][wallX + lineNumber] = tileSymbol;
 		}
 	}
@@ -65,10 +86,10 @@ void createMap() {
 	int verticalCorridors = rand() % (map.width / 2) + 2;
 	int coinNumber = rand() % (map.width * map.height) / 100 + 1;
 
-	drawLines(horizontalWalls, 1, '#', H);
-	drawLines(verticalWalls, 1, '#');
-	drawLines(horizontalCorridors, 3, H);
-	drawLines(verticalCorridors, 3);
+	drawLines(horizontalWalls, 1, '#');
+	drawLines(verticalWalls, 1, '#', VERTICAL);
+	drawLines(horizontalCorridors, 3);
+	drawLines(verticalCorridors, 3, NULL, VERTICAL);
 	drawCoins(coinNumber);
 
 	for (x = 0; x < map.width; x++)
@@ -93,31 +114,21 @@ bool tileVisible(int x, int y) {
 	return false;
 }
 
-int mapCoordinate(int xy) {
-	if (xy = X)
-		if (MAP_WIDTH <= MAX_WIDTH) return 0;
-		else return (player.x - (MAX_WIDTH / 2));
-	else
-		if (MAP_HEIGHT <= MAX_HEIGHT) return 0;
-		else return (player.y - (MAX_HEIGHT / 2));
-	return 0;
-}
-
 void drawMap() {
 	int x, y;
 	clearScreen();
-	for (y = mapCoordinate(Y); y < mapCoordinate(Y) + (MAP_HEIGHT > MAX_HEIGHT ? MAX_HEIGHT : MAP_HEIGHT); y++) {
-		for (x = mapCoordinate(X); x < mapCoordinate(Y) + (MAP_WIDTH > MAX_WIDTH ? MAX_WIDTH : MAP_WIDTH); x++) {
-			if (x < 0 || y < 0 || x >= MAX_WIDTH || y >= MAX_HEIGHT ) std::cout << ' ';
+	for (y = player.y - (MAX_HEIGHT / 2); y < player.y + (MAX_HEIGHT / 2); y++) {
+		for (x = player.x - (MAX_WIDTH / 2); x < player.x + (MAX_WIDTH / 2); x++) {
+			if (x < 0 || y < 0 || x >= MAP_WIDTH || y >= MAP_HEIGHT ) std::cout << BLANK_TILE;
 			else if (tileVisible(x, y)) std::cout << map.tiles[y][x];
-			else std::cout << ' ';
+			else std::cout << BLANK_TILE;
 		}
 		std::cout << "\n";
 	}
 	std::cout << "\n";
 }
 
-void resetMap(bool light = false, int vision = 8) {
+void resetMap(bool light = false, int vision = MAP_VISION) {
 	createMap();
 	player.x = map.width / 2, player.y = map.height / 2;
 	map.tiles[player.y][player.x] = 'v';
