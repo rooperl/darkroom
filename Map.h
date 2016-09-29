@@ -8,7 +8,8 @@ public:
 	int width = MAP_WIDTH;
 	int height = MAP_HEIGHT;
 	char tiles[MAP_HEIGHT][MAP_WIDTH];
-	bool light = false;
+	bool light;
+	int vision;
 } map;
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
@@ -69,14 +70,14 @@ void createMap() {
 	drawLines(verticalCorridors, 3);
 	drawCoins(coins);
 
-	for (x = 0; x <= map.width; x++)
+	for (x = 0; x < map.width; x++)
 		map.tiles[0][x] = '#';
-	for (x = 0; x <= map.width; x++)
-		map.tiles[map.height][x] = '#';
-	for (y = 0; y <= map.height; y++)
+	for (x = 0; x < map.width; x++)
+		map.tiles[map.height-1][x] = '#';
+	for (y = 0; y < map.height; y++)
 		map.tiles[y][0] = '#';
-	for (y = 0; y <= map.height; y++)
-		map.tiles[y][map.width] = '#';
+	for (y = 0; y < map.height; y++)
+		map.tiles[y][map.width-1] = '#';
 }
 
 int tileDistance(int x, int y, short xy = -1) {
@@ -86,16 +87,16 @@ int tileDistance(int x, int y, short xy = -1) {
 }
 
 bool tileVisible(int x, int y) {
-	if ((tileDistance(x, y, X) == 8 || tileDistance(x, y, Y) == 8) && !map.light) return false;
-	if (tileDistance(x, y) <= 8 || map.light) return true;
+	if ((tileDistance(x, y, X) == map.vision || tileDistance(x, y, Y) == 8) && !map.light) return false;
+	if (tileDistance(x, y) <= map.vision || map.light) return true;
 	return false;
 }
 
 void drawMap() {
 	int x, y;
 	clearScreen();
-	for (y = 0; y <= map.height; y++) {
-		for (x = 0; x <= map.width; x++) {
+	for (y = 0; y < map.height; y++) {
+		for (x = 0; x < map.width; x++) {
 			if (tileVisible(x, y)) std::cout << map.tiles[y][x];
 			else std::cout << ' ';
 		}
@@ -104,10 +105,12 @@ void drawMap() {
 	std::cout << "\n";
 }
 
-void resetMap() {
+void resetMap(bool light = false, int vision = 8) {
 	createMap();
 	player.x = map.width / 2, player.y = map.height / 2;
 	map.tiles[player.y][player.x] = 'v';
+	map.light = light;
+	map.vision = vision;
 }
 
 bool canMove(char tile) {
