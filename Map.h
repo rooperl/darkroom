@@ -3,6 +3,7 @@
 #include "Game.h"
 
 #define BLANK_TILE '.'
+#define COIN_SYMBOL '$'
 #define MAP_WIDTH 61
 #define MAP_HEIGHT 37
 #define MAX_WIDTH 41
@@ -44,7 +45,7 @@ std::string fillTextBuffer() {
 	return text;
 }
 
-void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, int direction = HORIZONTAL) {
+void drawLines(int lines, int maxLineWidth, char tileSymbol = NULL, short direction = HORIZONTAL) {
 	int wallLength, wallX, wallY, lineNumber, tileNumber;
 	for (int line = 0; line <= lines; line++) {
 		direction == HORIZONTAL ? wallLength = rand() % (map.width / 2) + 1 :
@@ -70,7 +71,7 @@ void drawCoins(int coinNumber) {
 	for (int coin = 0; coin <= coinNumber; coin++) {
 		int x = rand() % map.width + 1;
 		int y = rand() % map.height + 1;
-		map.tiles[y][x] = '$';
+		map.tiles[y][x] = COIN_SYMBOL;
 	}
 }
 
@@ -128,7 +129,7 @@ void drawMap() {
 	std::cout << "\n";
 }
 
-void resetMap(bool light = false, int vision = MAP_VISION) {
+void resetMap(bool light = false, short vision = MAP_VISION) {
 	createMap();
 	player.x = map.width / 2, player.y = map.height / 2;
 	map.tiles[player.y][player.x] = 'v';
