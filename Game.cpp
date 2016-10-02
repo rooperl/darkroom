@@ -3,9 +3,7 @@
 #include <chrono>
 #include <string>
 #include <thread>
-
 #include "Game.h"
-#include "Map.h"
 
 void wait(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
@@ -28,8 +26,7 @@ void setCursor(short y, short x) {
 std::string fillTextBuffer() {
 	setCursor(MAX_HEIGHT);
 	std::string text;
-	for (int space = 0; space < MAX_WIDTH; space++)
-		text += " ";
+	for (int space = 0; space < MAX_WIDTH; space++) text += " ";
 	return text;
 }
 
