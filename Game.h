@@ -4,7 +4,6 @@
 class Game {
 public:
 	bool quit;
-	bool text;
 };
 
 void wait(int milliseconds);
