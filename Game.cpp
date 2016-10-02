@@ -11,7 +11,7 @@ void wait(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-void init(Player player, Map map) {
+void init(Player& player, Map& map) {
 	srand((unsigned)time(NULL));
 	CONSOLE_CURSOR_INFO cursorInfo;
 	cursorInfo.dwSize = 1;
@@ -41,7 +41,7 @@ bool toggleKey(short VK) {
 	return GetAsyncKeyState(VK) & 0x8000 != 0;
 }
 
-void checkKeyPresses(Game game, Map map, Player player) {
+void checkKeyPresses(Game& game, Map& map, Player& player) {
 	if (GetAsyncKeyState(VK_UP)) move(UP, map, player);
 	if (GetAsyncKeyState(VK_DOWN)) move(DOWN, map, player);
 	if (GetAsyncKeyState(VK_LEFT)) move(LEFT, map, player);

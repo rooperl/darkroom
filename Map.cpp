@@ -24,7 +24,7 @@ void drawLines(Map& map, int lines, int maxLineWidth, char tileSymbol, short dir
 	}
 }
 
-void drawCoins(Map map, int coinNumber) {
+void drawCoins(Map& map, int coinNumber) {
 	for (int coin = 0; coin <= coinNumber; coin++) {
 		int x = rand() % map.width + 1;
 		int y = rand() % map.height + 1;
@@ -32,7 +32,7 @@ void drawCoins(Map map, int coinNumber) {
 	}
 }
 
-void createMap(Map map) {
+void createMap(Map& map) {
 	int x, y;
 	for (x = 0; x <= map.width; x++)
 		for (y = 0; y <= map.height; y++)
@@ -61,19 +61,19 @@ void createMap(Map map) {
 		map.tiles[y][map.width - 1] = '#';
 }
 
-int tileDistance(Player player, int x, int y, short xy) {
+int tileDistance(Player& player, int x, int y, short xy) {
 	if (xy == X) return abs(x - player.x);
 	if (xy == Y) return abs(y - player.y);
 	return abs(x - player.x) + abs(y - player.y);
 }
 
-bool tileVisible(Map map, Player player, int x, int y) {
+bool tileVisible(Map& map, Player& player, int x, int y) {
 	if ((tileDistance(player, x, y, X) == map.vision || tileDistance(player, x, y, Y) == 8) && !map.light) return false;
 	if (tileDistance(player, x, y) <= map.vision || map.light) return true;
 	return false;
 }
 
-void drawMap(Player player, Map map) {
+void drawMap(Player& player, Map& map) {
 	int x, y;
 	setCursor();
 	for (y = player.y - (MAX_HEIGHT / 2); y < player.y + (MAX_HEIGHT / 2); y++) {
@@ -87,7 +87,7 @@ void drawMap(Player player, Map map) {
 	std::cout << "\n";
 }
 
-void resetMap(Player player, Map map, short vision) {
+void resetMap(Player& player, Map& map, short vision) {
 	createMap(map);
 	player.x = map.width / 2, player.y = map.height / 2;
 	map.tiles[player.y][player.x] = 'v';
@@ -100,11 +100,11 @@ bool canMove(char tile) {
 	else return false;
 }
 
-void checkCoin(Map map, Player player) {
+void checkCoin(Map& map, Player& player) {
 	if (map.tiles[player.y][player.x] == '$') player.coins++;
 }
 
-void checkMove(Map map, Player player, int x, int y, char playerSymbol) {
+void checkMove(Map& map, Player& player, int x, int y, char playerSymbol) {
 	if (canMove(map.tiles[player.y + y][player.x + x])) {
 		map.tiles[player.y][player.x] = NULL;
 		player.x += x;
@@ -114,7 +114,7 @@ void checkMove(Map map, Player player, int x, int y, char playerSymbol) {
 	map.tiles[player.y][player.x] = playerSymbol;
 }
 
-void move(Direction direction, Map map, Player player) {
+void move(Direction direction, Map& map, Player& player) {
 	switch (direction) {
 	case UP: checkMove(map, player, 0, -1, '^');
 		break;
