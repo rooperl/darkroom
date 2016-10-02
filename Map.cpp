@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "Player.h"
 #include "Map.h"
 
 void drawLines(Map& map, int lines, int maxLineWidth, char tileSymbol, short direction) {

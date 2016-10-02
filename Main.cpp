@@ -3,9 +3,9 @@
 #include "Game.h"
 #include "Map.h"
 
-Map map;
-Player player;
 Game game;
+Player player;
+Map map;
 
 int main() {
 	init(player, map);

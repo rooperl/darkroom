@@ -1,4 +1,5 @@
 #pragma once
+#include "Player.h"
 
 #define BLANK_TILE '.'
 #define COIN_SYMBOL '$'
@@ -22,13 +23,6 @@ public:
 	bool light;
 	int vision;
 
-};
-
-class Player {
-public:
-	int x;
-	int y;
-	int coins;
 };
 
 void drawLines(Map& map, int lines, int maxLineWidth, char tileSymbol = NULL, short direction = HORIZONTAL);
