@@ -15,8 +15,7 @@ void init(Player& player, Map& map) {
 	cursorInfo.dwSize = 1;
 	cursorInfo.bVisible = false;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
-	resetMap(player, map);
-	map.light = false;
+	resetMap(player, map, false);
 }
 
 void setCursor(short y, short x) {
@@ -45,5 +44,5 @@ void checkKeyPresses(Game& game, Map& map, Player& player) {
 	if (GetAsyncKeyState(VK_RIGHT)) move(RIGHT, map, player);
 	if (toggleKey(VK_ESCAPE)) game.quit = true;
 	if (toggleKey('L')) map.light = !map.light;
-	if (toggleKey('R')) resetMap(player, map);
+	if (toggleKey('R')) resetMap(player, map, map.light);
 }

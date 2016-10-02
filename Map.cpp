@@ -60,19 +60,19 @@ void createMap(Map& map) {
 		map.tiles[y][map.width - 1] = '#';
 }
 
-int tileDistance(Player& player, int x, int y, short xy) {
+int tileDistance(Player player, int x, int y, short xy) {
 	if (xy == X) return abs(x - player.x);
 	if (xy == Y) return abs(y - player.y);
 	return abs(x - player.x) + abs(y - player.y);
 }
 
-bool tileVisible(Map& map, Player& player, int x, int y) {
+bool tileVisible(Map map, Player player, int x, int y) {
 	if ((tileDistance(player, x, y, X) == map.vision || tileDistance(player, x, y, Y) == 8) && !map.light) return false;
 	if (tileDistance(player, x, y) <= map.vision || map.light) return true;
 	return false;
 }
 
-void drawMap(Player& player, Map& map) {
+void drawMap(Player player, Map map) {
 	int x, y;
 	setCursor();
 	for (y = player.y - (MAX_HEIGHT / 2); y < player.y + (MAX_HEIGHT / 2); y++) {
@@ -86,10 +86,11 @@ void drawMap(Player& player, Map& map) {
 	std::cout << "\n";
 }
 
-void resetMap(Player& player, Map& map, short vision) {
+void resetMap(Player& player, Map& map, bool light, short vision) {
 	createMap(map);
 	player.x = map.width / 2, player.y = map.height / 2;
 	map.tiles[player.y][player.x] = 'v';
+	map.light = light;
 	map.vision = vision;
 }
 
@@ -99,7 +100,7 @@ bool canMove(char tile) {
 	else return false;
 }
 
-void checkCoin(Map& map, Player& player) {
+void checkCoin(Map map, Player& player) {
 	if (map.tiles[player.y][player.x] == '$') player.coins++;
 }
 
