@@ -9,7 +9,7 @@ Game game;
 
 int main() {
 	init(player, map);
-	while (true) {
+	while (!game.quit) {
 		setCursor();
 		drawMap(player, map);
 		if (map.light) std::cout << "You have turned the lights on." << fillTextBuffer();
@@ -17,6 +17,6 @@ int main() {
 		std::cout << "\n\nCoins: " << player.coins << fillTextBuffer() << "\n\n";
 		wait(50);
 		if (windowFocused()) checkKeyPresses(game, map, player);
-		if (game.quit) return 0;
 	}
+	return 0;
 }
