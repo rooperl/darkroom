@@ -31,7 +31,7 @@ void createMap(Map& map);
 int tileDistance(Player player, int x, int y, short xy = -1);
 bool tileVisible(Map map, Player player, int x, int y);
 void drawMap(Player player, Map map);
-void resetMap(Player& player, Map& map, bool light, short vision = MAP_VISION);
+void resetMap(Player& player, Map& map, bool light = false, short vision = MAP_VISION);
 bool canMove(char tile);
 void checkCoin(Map map, Player& player);
 void checkMove(Map& map, Player& player, int x, int y, char playerSymbol);
