@@ -5,7 +5,8 @@
 #include <thread>
 #include <fstream>
 #include "Game.h"
-#include "Player.h"
+//#include "Player.h"
+#include "Map.h"
 
 void wait(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
@@ -39,7 +40,7 @@ bool toggleKey(short VK) {
 	return GetAsyncKeyState(VK) & 0x8000 != 0;
 }
 
-void readFile(Map& map, Player player) {
+/*void readFile(Map& map, Player player) {
 	std::ifstream mapFile;
 	mapFile.open("darkroom.drmap");
 	for (int y = 0; y < MAP_HEIGHT; y++) {
@@ -48,9 +49,9 @@ void readFile(Map& map, Player player) {
 	}
 	showPlayer(map, player);
 	mapFile.close();
-}
+}*/
 
-void writeFile(Map map) {
+/*void writeFile(Map map) {
 	std::ofstream mapFile;
 	mapFile.open("darkroom.drmap");
 	for (int y = 0; y < MAP_HEIGHT; y++) {
@@ -59,15 +60,15 @@ void writeFile(Map map) {
 		mapFile << "\n";
 	}
 	mapFile.close();
-}
+}*/
 
 void checkKeyPresses(Game& game, Map& map, Player& player) {
 	if (GetAsyncKeyState(VK_UP)) move(UP, map, player);
 	if (GetAsyncKeyState(VK_DOWN)) move(DOWN, map, player);
 	if (GetAsyncKeyState(VK_LEFT)) move(LEFT, map, player);
 	if (GetAsyncKeyState(VK_RIGHT)) move(RIGHT, map, player);
-	if (GetAsyncKeyState('I')) readFile(map);
-	if (GetAsyncKeyState('O')) writeFile(map);
+	//if (GetAsyncKeyState('I')) readFile(map, player);
+	//if (GetAsyncKeyState('O')) writeFile(map);
 	if (toggleKey(VK_ESCAPE)) game.quit = true;
 	if (toggleKey('L')) map.light = !map.light;
 	if (toggleKey('R')) resetMap(player, map, map.light);
