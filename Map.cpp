@@ -105,25 +105,44 @@ void checkCoin(Map map, Player& player) {
 	if (map.tiles[player.y][player.x] == '$') player.coins++;
 }
 
-void checkMove(Map& map, Player& player, int x, int y, char playerSymbol) {
+void checkMove(Map& map, Player& player, int x, int y, Direction direction) {
 	if (canMove(map.tiles[player.y + y][player.x + x])) {
 		map.tiles[player.y][player.x] = NULL;
 		player.x += x;
 		player.y += y;
 		checkCoin(map, player);
 	}
-	map.tiles[player.y][player.x] = playerSymbol;
+	map.tiles[player.y][player.x] = getPlayerTile(direction);
+	player.direction = direction;
 }
 
 void move(Direction direction, Map& map, Player& player) {
 	switch (direction) {
-	case UP: checkMove(map, player, 0, -1, '^');
+	case UP: checkMove(map, player, 0, -1, UP);
 		break;
-	case DOWN: checkMove(map, player, 0, 1, 'v');
+	case DOWN: checkMove(map, player, 0, 1, DOWN);
 		break;
-	case LEFT: checkMove(map, player, -1, 0, '<');
+	case LEFT: checkMove(map, player, -1, 0, LEFT);
 		break;
-	case RIGHT: checkMove(map, player, 1, 0, '>');
+	case RIGHT: checkMove(map, player, 1, 0, RIGHT);
+		break;
+	}
+}
+
+bool isPlayerTile(char tile) {
+	if (tile == '^' || tile == 'v' || tile == '<' || tile == '>') return true;
+	return false;
+}
+
+char getPlayerTile(Direction direction) {
+	switch (direction) {
+	case UP: return '^';
+		break;
+	case DOWN: return 'v';
+		break;
+	case LEFT: return '<';
+		break;
+	case RIGHT: return '>';
 		break;
 	}
 }
