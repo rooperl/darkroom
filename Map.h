@@ -13,8 +13,6 @@
 #define X 0
 #define Y 1
 
-enum Direction { UP, DOWN, LEFT, RIGHT };
-
 class Map {
 public:
 	int width = MAP_WIDTH;
@@ -34,5 +32,7 @@ void drawMap(Player player, Map map);
 void resetMap(Player& player, Map& map, bool light = false, short vision = MAP_VISION);
 bool canMove(char tile);
 void checkCoin(Map map, Player& player);
-void checkMove(Map& map, Player& player, int x, int y, char playerSymbol);
+void checkMove(Map& map, Player& player, int x, int y, Direction direction);
 void move(Direction direction, Map& map, Player& player);
+bool isPlayerTile(char tile);
+char getPlayerTile(Direction direction);

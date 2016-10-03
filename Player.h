@@ -1,11 +1,11 @@
 #pragma once
-//#include "Map.h"
+
+enum Direction { UP, DOWN, LEFT, RIGHT };
 
 class Player {
 public:
 	int x;
 	int y;
 	int coins;
+	Direction direction;
 };
-
-//void showPlayer(Map& map, Player player);
