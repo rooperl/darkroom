@@ -62,7 +62,7 @@ void writeFile(Map map) {
 			mapFile << map.tiles[y][x];
 		mapFile << "\n";
 	}
-	mapFile << "Editing this file manually can cause problems.";
+	mapFile << "MANUAL_EDIT";
 	mapFile.close();
 }
 
