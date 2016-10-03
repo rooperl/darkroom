@@ -13,5 +13,6 @@ void setCursor(short y = 0, short x = 0);
 std::string fillTextBuffer();
 bool windowFocused();
 bool toggleKey(short VK);
-void writeFile(Map map);
+//void writeFile(Map map);
+//void readFile(Map& map, Player player);
 void checkKeyPresses(Game& game, Map& map, Player& player);

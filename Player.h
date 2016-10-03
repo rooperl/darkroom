@@ -1,4 +1,5 @@
 #pragma once
+//#include "Map.h"
 
 class Player {
 public:
@@ -6,3 +7,5 @@ public:
 	int y;
 	int coins;
 };
+
+//void showPlayer(Map& map, Player player);
