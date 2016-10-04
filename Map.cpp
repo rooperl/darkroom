@@ -14,12 +14,12 @@ void drawLines(Map& map, int lines, int maxLineWidth, char tileSymbol, short dir
 		for (lineNumber = 0; lineNumber < maxLineWidth; lineNumber++) {
 			if (rand() % 2 == 0)
 				for (tileNumber = 0; tileNumber <= wallLength; tileNumber++)
-					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][wallX + tileNumber] = tileSymbol :
-					map.tiles[wallY + tileNumber][wallX + lineNumber] = tileSymbol;
+					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][wallX + tileNumber]
+					= tileSymbol : map.tiles[wallY + tileNumber][wallX + lineNumber] = tileSymbol;
 			else
 				for (tileNumber = wallLength; tileNumber > 0; tileNumber--)
-					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][map.width - tileNumber] = tileSymbol :
-					map.tiles[wallY + map.height - tileNumber][wallX + lineNumber] = tileSymbol;
+					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][map.width - tileNumber]
+					= tileSymbol : map.tiles[wallY + map.height - tileNumber][wallX + lineNumber] = tileSymbol;
 		}
 	}
 }
@@ -44,21 +44,21 @@ void createMap(Map& map) {
 	int verticalCorridors = rand() % (map.width / 2) + 2;
 	int coinNumber = rand() % (map.width * map.height) / 100 + 1;
 
-	drawLines(map, horizontalWalls, 1, '#');
-	drawLines(map, verticalWalls, 1, '#', VERTICAL);
+	drawLines(map, horizontalWalls, 1, WALL_TILE);
+	drawLines(map, verticalWalls, 1, WALL_TILE, VERTICAL);
 	drawLines(map, horizontalCorridors, 3);
 	drawLines(map, verticalCorridors, 3, NULL, VERTICAL);
 
 	drawCoins(map, coinNumber);
 
 	for (x = 0; x < map.width; x++)
-		map.tiles[0][x] = '#';
+		map.tiles[0][x] = WALL_TILE;
 	for (x = 0; x < map.width; x++)
-		map.tiles[map.height - 1][x] = '#';
+		map.tiles[map.height - 1][x] = WALL_TILE;
 	for (y = 0; y < map.height; y++)
-		map.tiles[y][0] = '#';
+		map.tiles[y][0] = WALL_TILE;
 	for (y = 0; y < map.height; y++)
-		map.tiles[y][map.width - 1] = '#';
+		map.tiles[y][map.width - 1] = WALL_TILE;
 }
 
 int tileDistance(Player player, int x, int y, short xy) {
@@ -68,7 +68,8 @@ int tileDistance(Player player, int x, int y, short xy) {
 }
 
 bool tileVisible(Map map, Player player, int x, int y) {
-	if ((tileDistance(player, x, y, X) == map.vision || tileDistance(player, x, y, Y) == 8) && !map.light) return false;
+	if ((tileDistance(player, x, y, X) == map.vision
+		|| tileDistance(player, x, y, Y) == 8) && !map.light) return false;
 	if (tileDistance(player, x, y) <= map.vision || map.light) return true;
 	return false;
 }
@@ -90,19 +91,19 @@ void drawMap(Player player, Map map) {
 void resetMap(Player& player, Map& map, bool light, short vision) {
 	createMap(map);
 	player.x = map.width / 2, player.y = map.height / 2;
-	map.tiles[player.y][player.x] = 'v';
+	map.tiles[player.y][player.x] = getPlayerTile(DOWN);
 	map.light = light;
 	map.vision = vision;
 }
 
 bool canMove(char tile) {
 	if (tile == NULL) return true;
-	if (tile == '$') return true;
+	if (tile == COIN_SYMBOL) return true;
 	else return false;
 }
 
 void checkCoin(Map map, Player& player) {
-	if (map.tiles[player.y][player.x] == '$') player.coins++;
+	if (map.tiles[player.y][player.x] == COIN_SYMBOL) player.coins++;
 }
 
 void checkMove(Map& map, Player& player, int x, int y, Direction direction) {
@@ -130,7 +131,8 @@ void move(Direction direction, Map& map, Player& player) {
 }
 
 bool isPlayerTile(char tile) {
-	if (tile == '^' || tile == 'v' || tile == '<' || tile == '>') return true;
+	if (tile == getPlayerTile(UP) || tile == getPlayerTile(DOWN)
+		|| tile == getPlayerTile(LEFT) || tile == getPlayerTile(RIGHT)) return true;
 	return false;
 }
 

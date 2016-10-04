@@ -2,6 +2,7 @@
 #include "Player.h"
 
 #define BLANK_TILE '.'
+#define WALL_TILE '#'
 #define COIN_SYMBOL '$'
 #define MAP_WIDTH 61
 #define MAP_HEIGHT 37
