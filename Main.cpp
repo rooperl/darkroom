@@ -15,7 +15,7 @@ int main() {
 		if (map.light) std::cout << "You have turned the lights on." << fillTextBuffer();
 		else std::cout <<"You're in a dark room." << fillTextBuffer();
 		std::cout << "\n\nCoins: " << player.coins << fillTextBuffer() << "\n\n";
-		wait(50);
+		wait(GAME_SPEED);
 		if (windowFocused()) checkKeyPresses(game, map, player);
 	}
 	return 0;

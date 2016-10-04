@@ -2,6 +2,10 @@
 #include "Player.h"
 #include "Map.h"
 
+#define GAME_SPEED 50
+#define FILENAME "darkroom.drmp"
+#define MANUAL_EDIT_TEXT "MANUAL_EDIT"
+
 class Game {
 public:
 	bool quit;

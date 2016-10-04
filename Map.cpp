@@ -138,13 +138,13 @@ bool isPlayerTile(char tile) {
 
 char getPlayerTile(Direction direction) {
 	switch (direction) {
-	case UP: return '^';
+	case UP: return PLAYER_UP;
 		break;
-	case DOWN: return 'v';
+	case DOWN: return PLAYER_DOWN;
 		break;
-	case LEFT: return '<';
+	case LEFT: return PLAYER_LEFT;
 		break;
-	case RIGHT: return '>';
+	case RIGHT: return PLAYER_RIGHT;
 		break;
 	}
 }
