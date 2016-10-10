@@ -1,9 +1,9 @@
 #pragma once
 
-#define PLAYER_UP '^'
-#define PLAYER_DOWN 'v'
-#define PLAYER_LEFT '<'
-#define PLAYER_RIGHT '>'
+const char PLAYER_UP = '^';
+const char PLAYER_DOWN = 'v';
+const char PLAYER_LEFT = '<';
+const char PLAYER_RIGHT = '>';
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
