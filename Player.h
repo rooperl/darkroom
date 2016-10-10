@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #pragma once
 
 const char PLAYER_UP = '^';
