@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <ctime>
 #include <windows.h>
 #include <chrono>
