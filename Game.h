@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #pragma once
 #include "Player.h"
 #include "Map.h"
@@ -16,7 +15,7 @@ bool toggleKey(short VK);
 void readFile(Map& map, Player& player);
 void writeFile(Map map);
 void checkKeyPresses(Map& map, Player& player);
-=======
+
 #pragma once
 #include "Player.h"
 #include "Map.h"
@@ -39,4 +38,3 @@ bool toggleKey(short VK);
 void readFile(Map& map, Player& player);
 void writeFile(Map map);
 void checkKeyPresses(Game& game, Map& map, Player& player);
->>>>>>> 670d61cc465dd8818df27b98dc19b6bdb4ec15cf
