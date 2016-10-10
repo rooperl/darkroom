@@ -24,11 +24,6 @@ const short GAME_SPEED = 50;
 const std::string FILENAME = "darkroom.drmp";
 const std::string MANUAL_EDIT_TEXT = "MANUAL_EDIT";
 
-class Game {
-public:
-	bool quit;
-};
-
 void wait(short milliseconds);
 void init(Player& player, Map& map);
 void setCursor(short y = 0, short x = 0);
@@ -37,4 +32,4 @@ bool windowFocused();
 bool toggleKey(short VK);
 void readFile(Map& map, Player& player);
 void writeFile(Map map);
-void checkKeyPresses(Game& game, Map& map, Player& player);
+void checkKeyPresses(Map& map, Player& player);
