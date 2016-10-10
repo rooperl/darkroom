@@ -8,7 +8,7 @@
 #include "Player.h"
 #include "Map.h"
 
-void wait(int milliseconds) {
+void wait(short milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
@@ -28,7 +28,7 @@ void setCursor(short y, short x) {
 std::string fillTextBuffer() {
 	setCursor(MAX_HEIGHT);
 	std::string text;
-	for (int space = 0; space < MAX_WIDTH; space++) text += " ";
+	for (short space = 0; space < MAX_WIDTH; space++) text += " ";
 	return text;
 }
 
@@ -37,14 +37,14 @@ bool windowFocused() {
 }
 
 bool toggleKey(short VK) {
-	return GetAsyncKeyState(VK) & 0x8000 != 0;
+	return GetAsyncKeyState(VK) & (0x8000 != 0);
 }
 
 void readFile(Map& map, Player& player) {
 	std::ifstream mapFile;
-	mapFile.open("darkroom.drmp");
-	for (int y = 0; y < MAP_HEIGHT; y++)
-		for (int x = 0; x < MAP_WIDTH; x++) {
+	mapFile.open(FILENAME);
+	for (short y = 0; y < MAP_HEIGHT; y++)
+		for (short x = 0; x < MAP_WIDTH; x++) {
 			mapFile >> map.tiles[y][x];
 			if (isPlayerTile(map.tiles[y][x])) {
 				player.x = x;
@@ -56,13 +56,13 @@ void readFile(Map& map, Player& player) {
 
 void writeFile(Map map) {
 	std::ofstream mapFile;
-	mapFile.open("darkroom.drmp");
-	for (int y = 0; y < MAP_HEIGHT; y++) {
-		for (int x = 0; x < MAP_WIDTH; x++)
+	mapFile.open(FILENAME);
+	for (short y = 0; y < MAP_HEIGHT; y++) {
+		for (short x = 0; x < MAP_WIDTH; x++)
 			mapFile << map.tiles[y][x];
 		mapFile << "\n";
 	}
-	mapFile << "MANUAL_EDIT";
+	mapFile << MANUAL_EDIT_TEXT;
 	mapFile.close();
 }
 
