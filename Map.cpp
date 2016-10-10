@@ -3,9 +3,9 @@
 #include "Player.h"
 #include "Map.h"
 
-void drawLines(Map& map, int lines, int maxLineWidth, char tileSymbol, short direction) {
-	int wallLength, wallX, wallY, lineNumber, tileNumber;
-	for (int line = 0; line <= lines; line++) {
+void drawLines(Map& map, short lines, short maxLineWidth, char tileSymbol, short direction) {
+	short line, wallLength, wallX, wallY, lineNumber, tileNumber;
+	for (line = 0; line <= lines; line++) {
 		direction == HORIZONTAL ? wallLength = rand() % (map.width / 2) + 1 :
 			wallLength = rand() % (map.height / 2) + 1;
 		wallX = rand() % (map.width) + 1;
@@ -24,25 +24,25 @@ void drawLines(Map& map, int lines, int maxLineWidth, char tileSymbol, short dir
 	}
 }
 
-void drawCoins(Map& map, int coinNumber) {
-	for (int coin = 0; coin <= coinNumber; coin++) {
-		int x = rand() % map.width + 1;
-		int y = rand() % map.height + 1;
+void drawCoins(Map& map, short coinNumber) {
+	for (short coin = 0; coin <= coinNumber; coin++) {
+		short x = rand() % map.width + 1;
+		short y = rand() % map.height + 1;
 		map.tiles[y][x] = COIN_SYMBOL;
 	}
 }
 
 void createMap(Map& map) {
-	int x, y;
+	short x, y;
 	for (x = 0; x <= map.width; x++)
 		for (y = 0; y <= map.height; y++)
 			map.tiles[y][x] = NULL;
 
-	int horizontalWalls = rand() % (map.height / 2) + 2;
-	int verticalWalls = rand() % (map.width / 2) + 2;
-	int horizontalCorridors = rand() % (map.height / 2) + 2;
-	int verticalCorridors = rand() % (map.width / 2) + 2;
-	int coinNumber = rand() % (map.width * map.height) / 100 + 1;
+	short horizontalWalls = rand() % (map.height / 2) + 2;
+	short verticalWalls = rand() % (map.width / 2) + 2;
+	short horizontalCorridors = rand() % (map.height / 2) + 2;
+	short verticalCorridors = rand() % (map.width / 2) + 2;
+	short coinNumber = rand() % (map.width * map.height) / 100 + 1;
 
 	drawLines(map, horizontalWalls, 1, WALL_TILE);
 	drawLines(map, verticalWalls, 1, WALL_TILE, VERTICAL);
@@ -61,13 +61,13 @@ void createMap(Map& map) {
 		map.tiles[y][map.width - 1] = WALL_TILE;
 }
 
-int tileDistance(Player player, int x, int y, short xy) {
+short tileDistance(Player player, short x, short y, short xy) {
 	if (xy == X) return abs(x - player.x);
 	if (xy == Y) return abs(y - player.y);
 	return abs(x - player.x) + abs(y - player.y);
 }
 
-bool tileVisible(Map map, Player player, int x, int y) {
+bool tileVisible(Map map, Player player, short x, short y) {
 	if ((tileDistance(player, x, y, X) == map.vision
 		|| tileDistance(player, x, y, Y) == 8) && !map.light) return false;
 	if (tileDistance(player, x, y) <= map.vision || map.light) return true;
@@ -75,10 +75,9 @@ bool tileVisible(Map map, Player player, int x, int y) {
 }
 
 void drawMap(Player player, Map map) {
-	int x, y;
 	setCursor();
-	for (y = player.y - (MAX_HEIGHT / 2); y < player.y + (MAX_HEIGHT / 2); y++) {
-		for (x = player.x - (MAX_WIDTH / 2); x < player.x + (MAX_WIDTH / 2); x++) {
+	for (short y = player.y - (MAX_HEIGHT / 2); y < player.y + (MAX_HEIGHT / 2); y++) {
+		for (short x = player.x - (MAX_WIDTH / 2); x < player.x + (MAX_WIDTH / 2); x++) {
 			if (x < 0 || y < 0 || x >= MAP_WIDTH || y >= MAP_HEIGHT) std::cout << BLANK_TILE;
 			else if (tileVisible(map, player, x, y)) std::cout << map.tiles[y][x];
 			else std::cout << BLANK_TILE;
@@ -106,7 +105,7 @@ void checkCoin(Map map, Player& player) {
 	if (map.tiles[player.y][player.x] == COIN_SYMBOL) player.coins++;
 }
 
-void checkMove(Map& map, Player& player, int x, int y, Direction direction) {
+void checkMove(Map& map, Player& player, short x, short y, Direction direction) {
 	if (canMove(map.tiles[player.y + y][player.x + x])) {
 		map.tiles[player.y][player.x] = NULL;
 		player.x += x;
@@ -147,4 +146,5 @@ char getPlayerTile(Direction direction) {
 	case RIGHT: return PLAYER_RIGHT;
 		break;
 	}
+	return BLANK_TILE;
 }
