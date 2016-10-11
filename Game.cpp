@@ -8,7 +8,7 @@
 #include "Player.h"
 #include "Map.h"
 
-void wait(unsigned long milliseconds) {
+void wait(short milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
