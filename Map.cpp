@@ -61,7 +61,7 @@ void createMap(Map& map) {
 		map.tiles[y][map.width - 1] = WALL_TILE;
 }
 
-short tileDistance(Player player, short x, short y, short xy) {
+int tileDistance(Player player, short x, short y, short xy) {
 	if (xy == X) return abs(x - player.x);
 	if (xy == Y) return abs(y - player.y);
 	return abs(x - player.x) + abs(y - player.y);
