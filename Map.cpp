@@ -54,7 +54,6 @@ void drawCoins(Map& map, short coinNumber) {
 
 void createMap(Map& map) {
 	short x, y;
-	
 	for (x = 0; x <= map.width; x++)
 		for (y = 0; y <= map.height; y++)
 			map.tiles[y][x] = NULL;
