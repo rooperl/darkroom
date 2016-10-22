@@ -4,7 +4,7 @@
 #include "Map.h"
 
 void drawLines(Map& map, short lines, short maxLineWidth, char tileSymbol, short direction) {
-	short line, wallLength, wallX, wallY, lineNumber, tileNumber;
+	short line, wallLength, wallX, wallY, lineNumber, tileNumber, mapY, mapX;
 	for (line = 0; line <= lines; line++) {
 		direction == HORIZONTAL ? wallLength = rand() % (map.width / 2) + 1 :
 			wallLength = rand() % (map.height / 2) + 1;
@@ -12,14 +12,34 @@ void drawLines(Map& map, short lines, short maxLineWidth, char tileSymbol, short
 		wallY = rand() % (map.height) + 1;
 		maxLineWidth = rand() % maxLineWidth + 1;
 		for (lineNumber = 0; lineNumber < maxLineWidth; lineNumber++) {
-			if (rand() % 2 == 0)
-				for (tileNumber = 0; tileNumber <= wallLength; tileNumber++)
-					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][wallX + tileNumber]
-					= tileSymbol : map.tiles[wallY + tileNumber][wallX + lineNumber] = tileSymbol;
-			else
-				for (tileNumber = wallLength; tileNumber > 0; tileNumber--)
-					direction == HORIZONTAL ? map.tiles[wallY + lineNumber][map.width - tileNumber]
-					= tileSymbol : map.tiles[wallY + map.height - tileNumber][wallX + lineNumber] = tileSymbol;
+			if (rand() % 2 == 0) {
+				for (tileNumber = 0; tileNumber <= wallLength; tileNumber++) {
+					if (direction == HORIZONTAL) {
+						mapY = (wallY + lineNumber < MAP_HEIGHT) ? wallY + lineNumber : (MAP_HEIGHT - 1);
+						mapX = (wallX + tileNumber < MAP_WIDTH) ? wallX + tileNumber : (MAP_WIDTH - 1);
+						map.tiles[mapY][mapX] = tileSymbol;
+					}
+					else {
+						mapY = (wallY + tileNumber < MAP_HEIGHT) ? wallY + tileNumber : (MAP_HEIGHT - 1);
+						mapX = (wallX + lineNumber < MAP_WIDTH) ? wallX + lineNumber : (MAP_WIDTH - 1);
+						map.tiles[mapY][mapX] = tileSymbol;
+					}
+				}
+			}
+			else {
+				for (tileNumber = wallLength; tileNumber > 0; tileNumber--) {
+					if (direction == HORIZONTAL) {
+						mapY = (wallY + lineNumber < MAP_HEIGHT) ? wallY + lineNumber : (MAP_HEIGHT - 1);
+						mapX = (wallX + tileNumber < MAP_WIDTH) ? wallX + tileNumber : (MAP_WIDTH - 1);
+						map.tiles[mapY][mapX] = tileSymbol;
+					}
+					else {
+						mapY = (wallY + map.height < MAP_HEIGHT) ? wallY + map.height : (MAP_HEIGHT - 1);
+						mapX = (wallX + lineNumber < MAP_WIDTH) ? wallX + lineNumber : (MAP_WIDTH - 1);
+						map.tiles[mapY][mapX] = tileSymbol;
+					}
+				}
+			}
 		}
 	}
 }
@@ -34,10 +54,11 @@ void drawCoins(Map& map, short coinNumber) {
 
 void createMap(Map& map) {
 	short x, y;
+	
 	for (x = 0; x <= map.width; x++)
 		for (y = 0; y <= map.height; y++)
 			map.tiles[y][x] = NULL;
-
+	
 	short horizontalWalls = rand() % (map.height / 2) + 2;
 	short verticalWalls = rand() % (map.width / 2) + 2;
 	short horizontalCorridors = rand() % (map.height / 2) + 2;
